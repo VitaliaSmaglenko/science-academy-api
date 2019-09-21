@@ -10,7 +10,7 @@ class SuccessfullyResource extends JsonResource
     {
        return [
            'message' => $this['message'],
-           'type' => $this['type'],
+           'type' => "success",
        ];
     }
 }
