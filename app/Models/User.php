@@ -10,8 +10,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
-    public const FLASH_MESSAGE_SUCCESS = 'success';
-
     /**
      * The attributes that are mass assignable.
      *
