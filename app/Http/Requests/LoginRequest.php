@@ -22,7 +22,7 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Поле email попрожнє',
+            'email.required' => 'Поле email порожнє',
             'password.required' => 'Поле пароль порожнє',
             'string' => 'Невалідна строка',
             'email' => 'Невалідний email',

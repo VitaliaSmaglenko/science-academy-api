@@ -31,7 +31,7 @@ class AuthController extends Controller
                 'message' => 'Невірний email або пароль'
             ], 401);
 
-        $token = $this->tokenService->create((bool) $request->remember_me);
+        $token = $this->tokenService->create(Auth::user(), (bool) $request->remember_me);
 
         return TokenResource::make($token);
     }
