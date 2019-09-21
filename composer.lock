@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ea58f5efe83cc01eafa7406b82da177",
+    "content-hash": "5488c9d4d82e87fa303e084e5b60000a",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -2312,26 +2312,30 @@
         },
         {
             "name": "santigarcor/laratrust",
-            "version": "5.2.2",
+            "version": "5.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/santigarcor/laratrust.git",
-                "reference": "f9a703639cdde914bdb99499ce2d3bef5070812f"
+                "reference": "526cc3e8970c35b97c71a7a6d8b63c2073568bb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/santigarcor/laratrust/zipball/f9a703639cdde914bdb99499ce2d3bef5070812f",
-                "reference": "f9a703639cdde914bdb99499ce2d3bef5070812f",
+                "url": "https://api.github.com/repos/santigarcor/laratrust/zipball/526cc3e8970c35b97c71a7a6d8b63c2073568bb1",
+                "reference": "526cc3e8970c35b97c71a7a6d8b63c2073568bb1",
                 "shasum": ""
             },
             "require": {
+                "illuminate/auth": "~5.2",
+                "illuminate/cache": "~5.2",
+                "illuminate/console": "~5.2",
+                "illuminate/database": "^5.2.32",
+                "illuminate/support": "~5.2",
                 "kkszymanowski/traitor": "^0.2.0",
-                "laravel/framework": "~5.6.0|~5.7.0|~5.8.0",
-                "php": "^7.1"
+                "php": ">=5.5.9"
             },
             "require-dev": {
                 "mockery/mockery": ">=0.9.9",
-                "orchestra/testbench": "~3.6.0|~3.7.0|~3.8.0",
+                "orchestra/testbench": "~3.2",
                 "phpunit/phpunit": ">=4.1"
             },
             "type": "library",
@@ -2373,7 +2377,7 @@
                 "rbac",
                 "roles"
             ],
-            "time": "2019-05-15T18:20:11+00:00"
+            "time": "2018-03-05T13:21:52+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
