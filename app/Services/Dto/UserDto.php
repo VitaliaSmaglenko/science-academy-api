@@ -11,6 +11,9 @@ class UserDto
     private $password;
     private $scienceDegree;
     private $academicRank;
+    private $position;
+    private $departmentId;
+    private $roleId;
 
     public function __construct(
         string $name,
@@ -19,7 +22,10 @@ class UserDto
         string $email,
         string $password,
         string $scienceDegree,
-        string $academicRank
+        string $academicRank,
+        string $position,
+        int $departmentId,
+        int $roleId
     )
     {
         $this->name = $name;
@@ -29,6 +35,9 @@ class UserDto
         $this->password = $password;
         $this->scienceDegree = $scienceDegree;
         $this->academicRank = $academicRank;
+        $this->position = $position;
+        $this->departmentId = $departmentId;
+        $this->roleId = $roleId;
     }
 
     public function getName(): string
@@ -64,5 +73,20 @@ class UserDto
     public function getAcademicRank(): string
     {
         return $this->academicRank;
+    }
+
+    public function getPosition(): string
+    {
+        return $this->position;
+    }
+
+    public function getDepartmentId(): int
+    {
+        return $this->departmentId;
+    }
+
+    public function getRoleId(): int
+    {
+        return $this->roleId;
     }
 }

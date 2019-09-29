@@ -16,7 +16,10 @@ class RequestToUserTransformer
             $request->email,
             $request->password,
             $request->science_degree,
-            $request->academic_rank
+            $request->academic_rank,
+            $request->position,
+            (int) $request->department_id,
+            (int) $request->role_id
         );
     }
 }
