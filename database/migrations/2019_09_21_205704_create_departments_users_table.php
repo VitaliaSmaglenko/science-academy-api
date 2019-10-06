@@ -9,6 +9,7 @@ class CreateDepartmentsUsersTable extends Migration
     public function up(): void
     {
         Schema::create('departments_users', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('department_id');
             $table->enum('position', [
@@ -20,11 +21,6 @@ class CreateDepartmentsUsersTable extends Migration
                 'Асистент',
                 ]);
             $table->timestamps();
-
-//            $table->foreign('department_id')->references('id')->on('departments')
-//                ->onUpdate('cascade')->onDelete('cascade');
-//            $table->foreign('user_id')->references('id')->on('users')
-//                ->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::table('departments_users', function ($table) {
