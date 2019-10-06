@@ -16,8 +16,11 @@ use Illuminate\Http\Request;
 Route::group([
     'prefix' => 'auth'
 ], function () {
-    Route::post('login', 'Api\Auth\AuthController@login');
-
+    Route::post( 'login', [
+         'as' => 'post.login',
+         'uses' => 'Api\Auth\AuthController@login'
+        ]
+    );
     Route::group([
         'middleware' => 'auth:api'
     ], function() {

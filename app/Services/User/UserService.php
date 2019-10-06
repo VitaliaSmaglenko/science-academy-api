@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\Models\User;
 use App\Services\Dto\UserDto;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Department;
 
 class UserService
 {
@@ -20,6 +21,12 @@ class UserService
             'scienceDegree' => $userDto->getScienceDegree(),
         ]);
         $user->save();
+
+        $department = Department::find($userDto->getDepartmentId());
+        $user->departments()->save($department, [
+            'position' => $userDto->getPosition(),
+        ]);
+        $user->attachRole($userDto->getRoleId());
 
         return $user;
     }

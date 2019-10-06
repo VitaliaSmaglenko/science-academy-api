@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Laratrust\Traits\LaratrustUserTrait;
+use App\Models\Department;
 
 class User extends Authenticatable
 {
+    use LaratrustUserTrait;
     use HasApiTokens, Notifiable;
 
     /**
@@ -16,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'surname', 'patronymic',
+        'name', 'email', 'password', 'surname', 'patronymic', 'is_delete',
     ];
 
     /**
@@ -36,4 +39,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function departments(){
+        return $this->belongsToMany(Department::class,
+            'department_user', 'user_id', 'department_id')
+            ->withPivot('position');
+    }
 }
