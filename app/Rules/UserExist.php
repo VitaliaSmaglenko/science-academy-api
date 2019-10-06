@@ -9,8 +9,8 @@ class UserExist implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        $users = User::where('email', '=', $value)->where('is_delete', false)->get();
-        if(count($users) != 0) {
+        $countOfUsers = User::where('email', '=', $value)->where('is_delete', false)->count();
+        if($countOfUsers != 0) {
             return false;
         }
         return true;
