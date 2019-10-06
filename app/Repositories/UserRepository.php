@@ -11,4 +11,9 @@ class UserRepository
     {
         return User::where('email', $email)->where('is_delete', false)->get();
     }
+
+    public function getUser(string $email): User
+    {
+        return User::where('email', $email)->where('is_delete', false)->first();
+    }
 }
