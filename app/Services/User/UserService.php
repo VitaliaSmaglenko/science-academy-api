@@ -5,7 +5,7 @@ namespace App\Services\User;
 use App\Models\User;
 use App\Services\Dto\UserDto;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Departments;
+use App\Models\Department;
 
 class UserService
 {
@@ -22,7 +22,7 @@ class UserService
         ]);
         $user->save();
 
-        $department = Departments::find($userDto->getDepartmentId());
+        $department = Department::find($userDto->getDepartmentId());
         $user->departments()->save($department, [
             'position' => $userDto->getPosition(),
         ]);

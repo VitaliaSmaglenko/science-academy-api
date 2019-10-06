@@ -2,13 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Models\Departments;
+use App\Models\Department;
 use Illuminate\Database\Eloquent\Collection;
 
 class DepartmentRepository
 {
     public function getDepartments(): Collection
     {
-        return Departments::get();
+        return Department::get();
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Laratrust\Traits\LaratrustUserTrait;
-use App\Models\Departments;
+use App\Models\Department;
 
 class User extends Authenticatable
 {
@@ -41,7 +41,7 @@ class User extends Authenticatable
     ];
 
     public function departments(){
-        return $this->belongsToMany(Departments::class,
+        return $this->belongsToMany(Department::class,
             'department_user', 'user_id', 'department_id')
             ->withPivot('position');
     }
