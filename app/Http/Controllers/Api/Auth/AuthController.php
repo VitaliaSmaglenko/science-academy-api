@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Resources\TokenResource;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,9 +19,15 @@ class AuthController extends Controller
      */
     private $tokenService;
 
-    public function __construct(TokenService $tokenService)
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    public function __construct(TokenService $tokenService, UserRepository $userRepository)
     {
         $this->tokenService = $tokenService;
+        $this->userRepository = $userRepository;
     }
 
     public function login(LoginRequest $request)
@@ -32,8 +39,9 @@ class AuthController extends Controller
             ], 401);
 
         $token = $this->tokenService->create(Auth::user(), (bool) $request->remember_me);
+        $user = $this->userRepository->getUser($credentials['email']);
 
-        return TokenResource::make($token);
+        return TokenResource::make(['token' => $token, 'user' => $user]);
     }
 
     public function logout(Request $request): SuccessfullyResource
