@@ -9,6 +9,6 @@ class UserRepository
 {
     public function getByEmail(string $email): Collection
     {
-        return User::where('email', $email)->get();
+        return User::where('email', $email)->where('is_delete', false)->get();
     }
 }

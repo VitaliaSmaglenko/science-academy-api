@@ -9,11 +9,9 @@ class UserExist implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        $users = User::where('email', '=', $value)->get();
-        foreach ($users as $user) {
-            if(!$user->is_delete){
-                return false;
-            }
+        $users = User::where('email', '=', $value)->where('is_delete', false)->get();
+        if(count($users) != 0) {
+            return false;
         }
         return true;
     }
