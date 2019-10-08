@@ -9,17 +9,18 @@ class RequestToUserTransformer
 {
     public function transform(Request $request): UserDto
     {
-        return new UserDto(
-            $request->name,
-            $request->surname,
-            $request->patronymic,
-            $request->email,
-            $request->password,
-            $request->science_degree,
-            $request->academic_rank,
-            $request->position,
-            (int) $request->department_id,
-            (int) $request->role_id
-        );
+        $userDto = new UserDto();
+
+        return $userDto
+                ->setName($request->name)
+                ->setPassword($request->password)
+                ->setEmail($request->email)
+                ->setAcademicRank($request->academic_rank)
+                ->setDepartmentId((int) $request->department_id)
+                ->setPatronymic($request->patronymic)
+                ->setPosition( $request->position)
+                ->setRoleId((int) $request->role_id)
+                ->setScienceDegree($request->science_degree)
+                ->setSurname($request->surname);
     }
 }
