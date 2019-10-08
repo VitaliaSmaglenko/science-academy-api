@@ -16,4 +16,9 @@ class UserRepository
     {
         return User::where('email', $email)->where('is_delete', false)->first();
     }
+
+    public function getAll(): Collection
+    {
+        return User::where('is_delete', false)->get();
+    }
 }
