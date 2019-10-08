@@ -26,4 +26,14 @@ class UserRepository
     {
         return User::where('id', $id)->where('is_delete', false)->first();
     }
+
+    public function getByDepartment(int $id, int $departmentId): ?User
+    {
+        return User::where('id', $id)
+            ->where('is_delete', false)
+            ->with(['departments' => function($query) use ($departmentId) {
+                $query->where('department_id', $departmentId);
+            }])
+            ->first();
+    }
 }

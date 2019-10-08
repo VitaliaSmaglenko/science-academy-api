@@ -34,3 +34,8 @@ Route::put('users/{id}/role', [
     'as' => 'put.update-role.user',
     'uses' => 'Api\UserManageController@updateRole'
 ])->middleware("auth:api")->middleware("manage-user");
+
+Route::put('users/{id}/department', [
+    'as' => 'put.add-department.user',
+    'uses' => 'Api\UserManageController@addDepartment'
+])->middleware("auth:api")->middleware("manage-user");

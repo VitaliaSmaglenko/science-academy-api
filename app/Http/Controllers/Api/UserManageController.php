@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddDepartmentRequest;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
@@ -129,5 +130,29 @@ class UserManageController extends Controller
 
         return UserResource::make($user);
 
+    }
+
+    public function addDepartment(string $id, AddDepartmentRequest $request)
+    {
+        $user = $this->userRepository->getOne((int) $id);
+        if(!$user) {
+            return response()->json([
+                'message' => 'Коричстувача не знайдено'
+            ], 401);
+        }
+        $hasDepartment = $this->userRepository->getByDepartment((int) $id, (int) $request->department_id);
+        if(count($hasDepartment->departments) != 0) {
+            return response()->json([
+                'message' => 'Корчистувач вже існує на кафедрі'
+            ], 401);
+        }
+
+        $user = $this->userService->addDepartment(
+            $user,
+            (int) $request->department_id,
+            $request->position
+        );
+
+        return UserResource::make($user);
     }
 }

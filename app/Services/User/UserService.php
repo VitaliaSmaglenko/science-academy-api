@@ -67,4 +67,14 @@ class UserService
 
         return $user;
     }
+
+    public function addDepartment(User $user, int $departmentId, string $position): User
+    {
+        $department = Department::find($departmentId);
+        $user->departments()->save($department, [
+            'position' => $position,
+        ]);
+
+        return $user;
+    }
 }
