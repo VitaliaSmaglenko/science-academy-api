@@ -30,4 +30,11 @@ class UserService
 
         return $user;
     }
+
+    public function delete(int $id): int
+    {
+        return User::where('id', $id)
+            ->where('is_delete', false)
+            ->update(['is_delete' => true]);
+    }
 }

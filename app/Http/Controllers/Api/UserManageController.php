@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\UserRepository;
 use App\Services\Transformers\RequestToUserTransformer;
 use App\Services\User\UserService;
 use App\Http\Resources\SuccessfullyResource;
@@ -20,14 +21,22 @@ class UserManageController extends Controller
      */
     private $userService;
 
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
     public function __construct(
         RequestToUserTransformer $requestToUserTransformer,
-        UserService $userService
+        UserService $userService,
+        UserRepository $userRepository
     )
     {
         $this->requestToUserTransformer = $requestToUserTransformer;
         $this->userService = $userService;
+        $this->userRepository = $userRepository;
     }
+
     public function create(CreateUserRequest $request): SuccessfullyResource
     {
         $userDto = $this->requestToUserTransformer->transform($request);
@@ -36,6 +45,21 @@ class UserManageController extends Controller
         return SuccessfullyResource::make([
             'message' => "Користувач створений"
         ]);
+    }
+
+    public function delete(string $id): SuccessfullyResource
+    {
+        $this->userService->delete((int) $id);
+
+        return SuccessfullyResource::make([
+            'message' => "Користувача видалено"
+        ]);
+    }
+
+    public function getAll()
+    {
+        $this->userRepository->getAll();
+
     }
 
 }
