@@ -37,4 +37,18 @@ class UserService
             ->where('is_delete', false)
             ->update(['is_delete' => true]);
     }
+
+    public function update(User $user, UserDto $userDto): User
+    {
+        $user->name = $userDto->getName();
+        $user->surname = $userDto->getSurname();
+        $user->patronymic = $userDto->getPatronymic();
+        $user->email = $userDto->getEmail();
+        $user->academic_rank = $userDto->getAcademicRank();
+        $user->science_degree = $userDto->getScienceDegree();
+
+        $user->save();
+
+        return $user;
+    }
 }

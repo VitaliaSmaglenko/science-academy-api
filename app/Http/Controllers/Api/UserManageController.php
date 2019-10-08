@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UsersResource;
 use App\Repositories\UserRepository;
@@ -10,6 +11,7 @@ use App\Services\Transformers\RequestToUserTransformer;
 use App\Services\User\UserService;
 use App\Http\Resources\SuccessfullyResource;
 use App\Http\Requests\CreateUserRequest;
+use App\Services\Transformers\RequestUpdateToUserTransformer;
 
 class UserManageController extends Controller
 {
@@ -28,15 +30,22 @@ class UserManageController extends Controller
      */
     private $userRepository;
 
+    /**
+     * @var RequestUpdateToUserTransformer
+     */
+    private $requestUpdateToUserTransformer;
+
     public function __construct(
         RequestToUserTransformer $requestToUserTransformer,
         UserService $userService,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        RequestUpdateToUserTransformer $requestUpdateToUserTransformer
     )
     {
         $this->requestToUserTransformer = $requestToUserTransformer;
         $this->userService = $userService;
         $this->userRepository = $userRepository;
+        $this->requestUpdateToUserTransformer = $requestUpdateToUserTransformer;
     }
 
     public function create(CreateUserRequest $request): SuccessfullyResource
@@ -73,6 +82,20 @@ class UserManageController extends Controller
                 'message' => 'Коричстувача не знайдено'
             ], 401);
         }
+        return UserResource::make($user);
+    }
+
+    public function update(string $id, UpdateUserRequest $request)
+    {
+        $user = $this->userRepository->getOne((int) $id);
+        if(!$user) {
+            return response()->json([
+                'message' => 'Коричстувача не знайдено'
+            ], 401);
+        }
+        $userDto = $this->requestUpdateToUserTransformer->transform($request);
+        $user = $this->userService->update($user, $userDto);
+
         return UserResource::make($user);
     }
 

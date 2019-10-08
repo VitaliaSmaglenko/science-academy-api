@@ -19,3 +19,8 @@ Route::get('users/{id}', [
     'as' => 'get.get.user',
     'uses' => 'Api\UserManageController@get'
 ])->middleware("auth:api")->middleware("manage-user");
+
+Route::put('users/{id}', [
+    'as' => 'put.update.user',
+    'uses' => 'Api\UserManageController@update'
+])->middleware("auth:api")->middleware("manage-user");
