@@ -59,4 +59,12 @@ class UserService
 
         return $user;
     }
+
+    public function updateRole(User $user, string $roleId): User
+    {
+        $user->detachRoles();
+        $user->attachRole($roleId);
+
+        return $user;
+    }
 }

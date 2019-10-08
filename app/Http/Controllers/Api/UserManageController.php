@@ -116,4 +116,18 @@ class UserManageController extends Controller
         ]);
     }
 
+    public function updateRole(string $id, Request $request)
+    {
+        $user = $this->userRepository->getOne((int) $id);
+        if(!$user) {
+            return response()->json([
+                'message' => 'Коричстувача не знайдено'
+            ], 401);
+        }
+
+        $user = $this->userService->updateRole($user, $request->role_id);
+
+        return UserResource::make($user);
+
+    }
 }
