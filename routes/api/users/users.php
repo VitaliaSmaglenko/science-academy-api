@@ -24,3 +24,8 @@ Route::put('users/{id}', [
     'as' => 'put.update.user',
     'uses' => 'Api\UserManageController@update'
 ])->middleware("auth:api")->middleware("manage-user");
+
+Route::put('users/{id}/password', [
+    'as' => 'put.update-password.user',
+    'uses' => 'Api\UserManageController@updatePassword'
+])->middleware("auth:api")->middleware("manage-user");

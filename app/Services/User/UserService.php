@@ -51,4 +51,12 @@ class UserService
 
         return $user;
     }
+
+    public function updatePassword(User $user, string $password): User
+    {
+        $user->password = Hash::make($password);
+        $user->save();
+
+        return $user;
+    }
 }

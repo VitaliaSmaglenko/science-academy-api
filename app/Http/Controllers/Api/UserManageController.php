@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UsersResource;
@@ -12,6 +13,7 @@ use App\Services\User\UserService;
 use App\Http\Resources\SuccessfullyResource;
 use App\Http\Requests\CreateUserRequest;
 use App\Services\Transformers\RequestUpdateToUserTransformer;
+use Illuminate\Http\Request;
 
 class UserManageController extends Controller
 {
@@ -97,6 +99,21 @@ class UserManageController extends Controller
         $user = $this->userService->update($user, $userDto);
 
         return UserResource::make($user);
+    }
+
+    public function updatePassword(string $id, PasswordRequest $request): SuccessfullyResource
+    {
+        $user = $this->userRepository->getOne((int) $id);
+        if(!$user) {
+            return response()->json([
+                'message' => 'Коричстувача не знайдено'
+            ], 401);
+        }
+        $this->userService->updatePassword($user, $request->password);
+
+        return SuccessfullyResource::make([
+            'message' => "Пароль змінено"
+        ]);
     }
 
 }
