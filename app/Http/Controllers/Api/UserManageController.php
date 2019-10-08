@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Http\Resources\UsersResource;
 use App\Repositories\UserRepository;
 use App\Services\Transformers\RequestToUserTransformer;
@@ -62,6 +63,17 @@ class UserManageController extends Controller
         $users = $this->userRepository->getAll();
 
         return UsersResource::make($users);
+    }
+
+    public function get(string $id)
+    {
+        $user = $this->userRepository->getOne((int) $id);
+        if(!$user) {
+            return response()->json([
+                'message' => 'Коричстувача не знайдено'
+            ], 401);
+        }
+        return UserResource::make($user);
     }
 
 }

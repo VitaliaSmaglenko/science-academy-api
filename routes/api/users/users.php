@@ -14,3 +14,8 @@ Route::get('users', [
     'as' => 'get.get-collection.user',
     'uses' => 'Api\UserManageController@getAll'
 ])->middleware("auth:api")->middleware("manage-user");
+
+Route::get('users/{id}', [
+    'as' => 'get.get.user',
+    'uses' => 'Api\UserManageController@get'
+])->middleware("auth:api")->middleware("manage-user");
