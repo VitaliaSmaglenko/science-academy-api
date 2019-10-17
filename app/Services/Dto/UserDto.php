@@ -15,29 +15,74 @@ class UserDto
     private $departmentId;
     private $roleId;
 
-    public function __construct(
-        string $name,
-        string $surname,
-        string $patronymic,
-        string $email,
-        string $password,
-        string $scienceDegree,
-        string $academicRank,
-        string $position,
-        int $departmentId,
-        int $roleId
-    )
+    public function setName(string $name): UserDto
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function setSurname(string $surname): UserDto
+    {
         $this->surname = $surname;
-        $this->patronymic = $patronymic;
+
+        return $this;
+    }
+
+    public function setPatronymic(string $patronymic): UserDto
+    {
+         $this->patronymic = $patronymic;
+
+        return $this;
+    }
+
+    public function setEmail(string $email): UserDto
+    {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function setPassword(string $password): UserDto
+    {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function setScienceDegree(string $scienceDegree): UserDto
+    {
         $this->scienceDegree = $scienceDegree;
+
+        return $this;
+    }
+
+    public function setAcademicRank(string $academicRank): UserDto
+    {
         $this->academicRank = $academicRank;
+
+        return $this;
+    }
+
+    public function setPosition(string $position): UserDto
+    {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function setDepartmentId(int $departmentId): UserDto
+    {
         $this->departmentId = $departmentId;
+
+        return $this;
+    }
+
+    public function setRoleId(int $roleId): UserDto
+    {
         $this->roleId = $roleId;
+
+        return $this;
     }
 
     public function getName(): string
