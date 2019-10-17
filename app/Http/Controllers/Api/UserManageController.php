@@ -15,6 +15,7 @@ use App\Http\Resources\SuccessfullyResource;
 use App\Http\Requests\CreateUserRequest;
 use App\Services\Transformers\RequestUpdateToUserTransformer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class UserManageController extends Controller
 {
@@ -57,16 +58,22 @@ class UserManageController extends Controller
         $user = $this->userService->create($userDto);
 
         return SuccessfullyResource::make([
-            'message' => "Користувач створений"
+            'message' => Lang::get("user.create")
         ]);
     }
 
     public function delete(string $id): SuccessfullyResource
     {
+        $user = $this->userRepository->getOne((int) $id);
+        if(!$user) {
+            return response()->json([
+                'message' => Lang::get("user.notFound")
+            ], 404);
+        }
         $this->userService->delete((int) $id);
 
         return SuccessfullyResource::make([
-            'message' => "Користувача видалено"
+            'message' => Lang::get("user.delete")
         ]);
     }
 
@@ -82,8 +89,8 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => 'Коричстувача не знайдено'
-            ], 401);
+                'message' => Lang::get("message.user.notFound")
+            ], 404);
         }
         return UserResource::make($user);
     }
@@ -93,8 +100,8 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => 'Коричстувача не знайдено'
-            ], 401);
+                'message' => Lang::get("user.notFound")
+            ], 404);
         }
         $userDto = $this->requestUpdateToUserTransformer->transform($request);
         $user = $this->userService->update($user, $userDto);
@@ -107,13 +114,13 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => 'Коричстувача не знайдено'
-            ], 401);
+                'message' => Lang::get("user.notFound")
+            ], 404);
         }
         $this->userService->updatePassword($user, $request->password);
 
         return SuccessfullyResource::make([
-            'message' => "Пароль змінено"
+            'message' => 'Пароль змінено'
         ]);
     }
 
@@ -122,8 +129,8 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => 'Коричстувача не знайдено'
-            ], 401);
+                'message' => Lang::get("user.notFound")
+            ], 404);
         }
 
         $user = $this->userService->updateRole($user, $request->role_id);
@@ -137,13 +144,13 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => 'Коричстувача не знайдено'
-            ], 401);
+                'message' => Lang::get("user.notFound")
+            ], 404);
         }
         $hasDepartment = $this->userRepository->getByDepartment((int) $id, (int) $request->department_id);
         if(count($hasDepartment->departments) != 0) {
             return response()->json([
-                'message' => 'Корчистувач вже існує на кафедрі'
+                'message' => Lang::get("user.alreadyExist")
             ], 401);
         }
 
