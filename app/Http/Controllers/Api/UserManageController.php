@@ -58,7 +58,7 @@ class UserManageController extends Controller
         $user = $this->userService->create($userDto);
 
         return SuccessfullyResource::make([
-            'message' => Lang::get("user.create")
+            'message' => Lang::get("message.user.create")
         ]);
     }
 
@@ -67,13 +67,13 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => Lang::get("user.notFound")
+                'message' => Lang::get("message.user.notFound")
             ], 404);
         }
         $this->userService->delete((int) $id);
 
         return SuccessfullyResource::make([
-            'message' => Lang::get("user.delete")
+            'message' => Lang::get("message.user.delete")
         ]);
     }
 
@@ -100,7 +100,7 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => Lang::get("user.notFound")
+                'message' => Lang::get("message.user.notFound")
             ], 404);
         }
         $userDto = $this->requestUpdateToUserTransformer->transform($request);
@@ -114,7 +114,7 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => Lang::get("user.notFound")
+                'message' => Lang::get("message.user.notFound")
             ], 404);
         }
         $this->userService->updatePassword($user, $request->password);
@@ -129,7 +129,7 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => Lang::get("user.notFound")
+                'message' => Lang::get("message.user.notFound")
             ], 404);
         }
 
@@ -144,13 +144,13 @@ class UserManageController extends Controller
         $user = $this->userRepository->getOne((int) $id);
         if(!$user) {
             return response()->json([
-                'message' => Lang::get("user.notFound")
+                'message' => Lang::get("message.user.notFound")
             ], 404);
         }
         $hasDepartment = $this->userRepository->getByDepartment((int) $id, (int) $request->department_id);
         if(count($hasDepartment->departments) != 0) {
             return response()->json([
-                'message' => Lang::get("user.alreadyExist")
+                'message' => Lang::get("message.user.alreadyExist")
             ], 401);
         }
 
