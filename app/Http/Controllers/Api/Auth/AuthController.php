@@ -33,9 +33,13 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = request(['email', 'password']);
-        if(!Auth::attempt($credentials))
+        if(!Auth::attempt([
+            'email' => $credentials['email'],
+            'password' => $credentials['password'],
+            'is_delete' => false
+        ]))
             return response()->json([
-                'message' => 'Невірний email або пароль'
+                'message' => 'Невірний email або пароль',
             ], 401);
 
         $token = $this->tokenService->create(Auth::user(), (bool) $request->remember_me);
