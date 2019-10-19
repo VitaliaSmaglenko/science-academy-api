@@ -98,7 +98,7 @@ class DepartmentController extends Controller
         return DepartmentInfoResource::make($department);
     }
 
-    public function addUserToDepartment(string $id, AddTeacherToDepartmentRequest $request )
+    public function addUser(string $id, AddTeacherToDepartmentRequest $request )
     {
         $department = $this->departmentRepository->getById((int)$id);
         if(!$department) {
@@ -123,15 +123,14 @@ class DepartmentController extends Controller
         return DepartmentInfoResource::make($department);
     }
 
-    public function deleteUserFromDepartment(string $departmentId, string $userId)
+    public function deleteUser(string $departmentId, string $userId)
     {
-        $department = $this->departmentRepository->getById((int) $departmentId);
+        $department = $this->departmentRepository->getByUser((int) $departmentId, (int) $userId);
         if(!$department) {
             return response()->json([
                 'message' => Lang::get("message.department.notFound")
             ], 404);
         }
-        $department = $this->departmentRepository->getByUser((int) $departmentId, (int) $userId);
         if(count($department->users) == 0) {
             return response()->json([
                 'message' => Lang::get("message.department.userNotFound")

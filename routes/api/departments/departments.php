@@ -26,11 +26,11 @@ Route::get('departments/{id}', [
 ])->middleware("auth:api");
 
 Route::put('departments/{id}/users', [
-    'as' => 'put.department.addUserToDepartment',
-    'uses' => 'Api\DepartmentController@addUserToDepartment'
+    'as' => 'put.department.addUser',
+    'uses' => 'Api\DepartmentController@addUser'
 ])->middleware("auth:api");
 
 Route::delete('departments/{departmentId}/users/{userId}', [
-    'as' => 'delete.department.deleteUserFromDepartment',
-    'uses' => 'Api\DepartmentController@deleteUserFromDepartment'
+    'as' => 'delete.department.deleteUser',
+    'uses' => 'Api\DepartmentController@deleteUser'
 ])->middleware("auth:api");
