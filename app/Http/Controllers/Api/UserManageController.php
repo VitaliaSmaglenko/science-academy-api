@@ -77,11 +77,11 @@ class UserManageController extends Controller
         ]);
     }
 
-    public function getAll(): UsersResource
+    public function getAll()
     {
         $users = $this->userRepository->getAll();
 
-        return UsersResource::make($users);
+        return UsersResource::collection($users);
     }
 
     public function get(string $id)
