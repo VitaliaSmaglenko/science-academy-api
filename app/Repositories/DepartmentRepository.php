@@ -11,4 +11,25 @@ class DepartmentRepository
     {
         return Department::get();
     }
+
+    public function getById(int $id): ?Department
+    {
+        return Department::where('id', $id)->first();
+    }
+
+    public function getInfo(int $id): ?Department
+    {
+        return Department::where('id', $id)
+            ->with('users')
+            ->first();
+    }
+
+    public function getByUser(int $id, int $userId): ?Department
+    {
+        return Department::where('id', $id)
+            ->with(['users' => function($query) use ($userId) {
+                $query->where('user_id', $userId);
+            }])
+            ->first();
+    }
 }
