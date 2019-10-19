@@ -31,11 +31,12 @@ class UserService
         return $user;
     }
 
-    public function delete(int $id): int
+    public function delete(User $user): bool
     {
-        return User::where('id', $id)
-            ->where('is_delete', false)
-            ->update(['is_delete' => true]);
+        $user->departments()->detach();
+        $user->is_delete = true;
+
+        return $user->save();
     }
 
     public function update(User $user, UserDto $userDto): User

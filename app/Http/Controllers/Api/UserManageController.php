@@ -70,7 +70,7 @@ class UserManageController extends Controller
                 'message' => Lang::get("message.user.notFound")
             ], 404);
         }
-        $this->userService->delete((int) $id);
+        $this->userService->delete($user);
 
         return SuccessfullyResource::make([
             'message' => Lang::get("message.user.delete")
