@@ -20,9 +20,7 @@ class DepartmentRepository
     public function getInfo(int $id): ?Department
     {
         return Department::where('id', $id)
-            ->with(['users' => function($query) use ($id) {
-                $query->where('department_id', $id);
-            }])
+            ->with('users')
             ->first();
     }
 
