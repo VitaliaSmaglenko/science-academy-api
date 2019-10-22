@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Resources\TokenResource;
+use App\Http\Resources\UsersResource;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -57,9 +58,8 @@ class AuthController extends Controller
         ]);
     }
 
-
-    public function user(Request $request): JsonResponse
+    public function user(Request $request): UsersResource
     {
-        return response()->json($request->user());
+        return UsersResource::make($request->user());
     }
 }
