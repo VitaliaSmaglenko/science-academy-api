@@ -10,17 +10,23 @@ class TokenResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'access_token' => $this['token']->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $this['token']->token->expires_at
-            )->toDateTimeString(),
-            'user' => $this['user'],
-            'role' => $this['user']->roles->map(function ($role){
-                return [
-                    'name' => $role->name,
-                ];
-            }),
+            'user' => [
+                'id' => $this['user']->id,
+                'email' => $this['user']->email,
+                'surname' => $this['user']->surname,
+                'name' => $this['user']->name,
+                'patronymic' => $this['user']->patronymic,
+                'science_degree' => $this['user']->science_degree,
+                'academic_rank' => $this['user']->academic_rank,
+                'created_at' => $this['user']->created_at,
+                'departments' =>UserDepartmentResource::collection( $this['user']->departments),
+                'roles' => RolesCollectionResource::collection($this['user']->roles),
+                'access_token' => $this['token']->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse(
+                    $this['token']->token->expires_at
+                )->toDateTimeString(),
+            ],
         ];
     }
 }
