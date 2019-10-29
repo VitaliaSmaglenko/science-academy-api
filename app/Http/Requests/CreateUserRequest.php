@@ -24,7 +24,7 @@ class CreateUserRequest extends FormRequest
             'science_degree' => ['required', 'string'],
             'department_id' => ['required'],
             'position' => ['required', 'string'],
-            'role_id' => ['required', 'string'],
+            'role_id' => ['required'],
         ];
     }
 
