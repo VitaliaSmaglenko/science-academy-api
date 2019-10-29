@@ -17,17 +17,8 @@ class UserResource extends JsonResource
             'science_degree' => $this->science_degree,
             'academic_rank' => $this->academic_rank,
             'created_at' => $this->created_at,
-            'departments' => $this->departments->map(function ($department) {
-                return [
-                    'name' => $department->department,
-                    'position' => $department->pivot->position,
-                ];
-            }),
-            'roles' => $this->roles->map(function ($role) {
-                return [
-                    'name' => $role->name,
-                ];
-            }),
+            'departments' => UserDepartmentResource::collection( $this->departments),
+            'roles' => RolesCollectionResource::collection($this->roles),
         ];
     }
 }
