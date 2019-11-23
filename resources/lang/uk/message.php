@@ -27,4 +27,9 @@ return [
     "work" => [
         "notFound" => "Вид роботи не знайдено",
     ],
+
+    "completedWork" => [
+        "create" => "Роботу збережено",
+        "coAuthorNotFound" => "Соавтора не знайдено"
+    ],
 ];
