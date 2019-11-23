@@ -11,7 +11,7 @@ class CompletedWorkService
     {
         $completedWork = new CompletedWork([
             'user_id' => $completedWorkDto->getUserId(),
-            'type_id' => $completedWorkDto->getTypeId(),
+            'work_id' => $completedWorkDto->getWorkId(),
             'title' => $completedWorkDto->getTitle(),
             'reference' => $completedWorkDto->getReference(),
             'co_author_id' => $completedWorkDto->getCoAuthorId(),

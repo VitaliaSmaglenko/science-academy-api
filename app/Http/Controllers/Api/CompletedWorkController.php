@@ -59,7 +59,7 @@ class CompletedWorkController extends Controller
     public function create(CreateWorkRequest $request)
     {
         $userId = $request->user()->id;
-        $work = $this->workRepository->getById((int) $request->type_id);
+        $work = $this->workRepository->getById((int) $request->work_id);
 
         if(!$work) {
             return response()->json([

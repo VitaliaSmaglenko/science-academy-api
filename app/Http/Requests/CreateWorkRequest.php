@@ -14,7 +14,7 @@ class CreateWorkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type_id' => ['required', 'string',],
+            'work_id' => ['required', 'string',],
             'title' => ['required', 'string'],
             'reference' => ['string'],
             'co_author_id' => ['string'],
@@ -26,7 +26,7 @@ class CreateWorkRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'type_id.required' => 'Вид роботи не вибраний',
+            'work_id.required' => 'Вид роботи не вибраний',
             'title.required' => 'Інформація о роботі порожня',
             'number_of_hours.required' => 'Кількість часів не обрано',
             'season.required' => 'Поле сезону порожнє',

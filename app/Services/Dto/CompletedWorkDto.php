@@ -5,7 +5,7 @@ namespace App\Services\Dto;
 class CompletedWorkDto
 {
     private $userId;
-    private $typeId;
+    private $workId;
     private $title;
     private $reference;
     private $coAuthorId;
@@ -24,16 +24,16 @@ class CompletedWorkDto
         return $this->userId;
     }
 
-    public function setTypeId(int $typeId): CompletedWorkDto
+    public function setWorkId(int $workId): CompletedWorkDto
     {
-        $this->typeId = $typeId;
+        $this->workId = $workId;
 
         return $this;
     }
 
-    public function getTypeId(): int
+    public function getWorkId(): int
     {
-        return $this->typeId;
+        return $this->workId;
     }
 
     public function setTitle(string $title): CompletedWorkDto

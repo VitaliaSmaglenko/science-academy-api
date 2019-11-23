@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class CompletedWork extends Model
 {
     protected $fillable = [
-        'id', 'user_id', 'type_id', 'title', 'reference',
+        'id', 'user_id', 'work_id', 'title', 'reference',
         'co_author_id', 'number_of_hours', 'season',
     ];
 
@@ -24,6 +24,6 @@ class CompletedWork extends Model
 
     public function works(): BelongsTo
     {
-        return $this->belongsTo(Work::class, "type_id");
+        return $this->belongsTo(Work::class, "work_id");
     }
 }

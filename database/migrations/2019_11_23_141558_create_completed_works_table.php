@@ -11,7 +11,7 @@ class CreateCompletedWorksTable extends Migration
         Schema::create('completed_works', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('type_id');
+            $table->unsignedInteger('work_id');
             $table->string("title");
             $table->string("reference")->nullable();
             $table->unsignedInteger('co_author_id')->nullable();
@@ -26,7 +26,7 @@ class CreateCompletedWorksTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('co_author_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('type_id')->references('id')->on('works')
+            $table->foreign('work_id')->references('id')->on('works')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

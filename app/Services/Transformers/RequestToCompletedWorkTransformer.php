@@ -19,6 +19,6 @@ class RequestToCompletedWorkTransformer
             ->setNumberOfHours((float)$request->number_of_hours)
             ->setSeason($request->season)
             ->setTitle($request->title)
-            ->setTypeId((int)$request->type_id);
+            ->setWorkId((int)$request->work_id);
     }
 }
