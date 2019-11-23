@@ -48,6 +48,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiScientistProfilesRoutes();
 
         $this->mapApiWorksRoutes();
+
+        $this->mapApiCompletedWorksRoutes();
         //
     }
 
@@ -118,5 +120,13 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api/works/works.php'));
+    }
+
+    protected function mapApiCompletedWorksRoutes(): void
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api/works/completed_works.php'));
     }
 }
