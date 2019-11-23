@@ -16,8 +16,8 @@ Route::get('completed-works/{id}', [
 ])->middleware("auth:api");
 
 Route::get('completed-works/users/{id}', [
-    'as' => 'get.completed-works.getForAdmin',
-    'uses' => 'Api\CompletedWorkController@getForAdmin'
+    'as' => 'get.completed-works.getByUser',
+    'uses' => 'Api\CompletedWorkController@getByUser'
 ])->middleware("auth:api");
 
 Route::delete('completed-works/{id}', [

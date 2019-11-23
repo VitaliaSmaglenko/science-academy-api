@@ -107,7 +107,7 @@ class CompletedWorkController extends Controller
         return CompletedWorkResource::make($completedWork);
     }
 
-    public function getForAdmin(string $user_id)
+    public function getByUser(string $user_id)
     {
         $user = $this->userRepository->getOne((int)$user_id);
         if (!$user) {
