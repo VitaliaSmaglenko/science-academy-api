@@ -16,7 +16,8 @@ class CompletedWorkResource extends JsonResource
             'reference' => $this->reference,
             'number_of_hours' => $this->number_of_hours,
             'co_author' => UserResource::make($this->authors),
-            'work' => WorkResource::make($this->works)
+            'work' => WorkResource::make($this->works),
+            'user' => UserResource::make($this->users),
         ];
     }
 }
