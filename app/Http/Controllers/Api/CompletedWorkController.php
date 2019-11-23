@@ -2,84 +2,85 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\CreateWorkRequest;
+use App\Repositories\CompletedWorkRepository;
+use App\Repositories\UserRepository;
+use App\Repositories\WorkRepository;
+use App\Services\Dto\UserDto;
+use App\Services\Transformers\RequestToCompletedWorkTransformer;
+use App\Services\Work\CompletedWorkService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SuccessfullyResource;
+use Illuminate\Support\Facades\Lang;
 
 class CompletedWorkController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var CompletedWorkRepository
      */
-    public function index()
-    {
-        //
-    }
+    private $completedWorkRepository;
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var CompletedWorkService
      */
-    public function create()
-    {
-        //
-    }
+    private $completedWorkService;
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @var RequestToCompletedWorkTransformer
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    private $requestToCompletedWorkTransformer;
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @var WorkRepository
      */
-    public function show($id)
-    {
-        //
-    }
+    private $workRepository;
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @var UserRepository
      */
-    public function edit($id)
+    private $userRepository;
+
+    public function __construct(
+        CompletedWorkRepository $completedWorkRepository,
+        CompletedWorkService $completedWorkService,
+        RequestToCompletedWorkTransformer $requestToCompletedWorkTransformer,
+        WorkRepository $workRepository,
+        UserRepository $userRepository
+    )
     {
-        //
+        $this->completedWorkRepository = $completedWorkRepository;
+        $this->completedWorkService = $completedWorkService;
+        $this->requestToCompletedWorkTransformer = $requestToCompletedWorkTransformer;
+        $this->workRepository = $workRepository;
+        $this->userRepository = $userRepository;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function create(CreateWorkRequest $request)
     {
-        //
-    }
+        $userId = $request->user()->id;
+        $work = $this->workRepository->getById((int) $request->type_id);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if(!$work) {
+            return response()->json([
+                'message' => Lang::get("message.work.notFound")
+            ], 404);
+        }
+
+        if ($request->co_author_id) {
+            $user = $this->userRepository->getOne((int) $request->co_author_id);
+            if (!$user) {
+                return response()->json([
+                    'message' => Lang::get("message.completedWork.coAuthorNotFound")
+                ], 404);
+            }
+        }
+
+        $completedWorkDto = $this->requestToCompletedWorkTransformer->transform($request, (int)$userId);
+        $this->completedWorkService->create($completedWorkDto);
+
+        return SuccessfullyResource::make([
+            'message' => Lang::get("message.completedWork.create")
+        ]);
     }
 }
