@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class WorkRepository
 {
-    public function get(): Collection
+    public function all(): Collection
     {
         return Work::get();
     }

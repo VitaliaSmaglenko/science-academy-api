@@ -30,7 +30,7 @@ class WorkController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        $works = $this->workRepository->get();
+        $works = $this->workRepository->all();
 
         return WorksResource::collection($works);
     }

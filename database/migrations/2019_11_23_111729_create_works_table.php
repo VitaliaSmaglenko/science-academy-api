@@ -12,8 +12,8 @@ class CreateWorksTable extends Migration
             $table->increments('id');
             $table->string("type");
             $table->enum("part", ["Підготовка", "Керівництво", "Інше"]);
-            $table->string("title_hint");
-            $table->string("reference_hint");
+            $table->string("title_hint")->nullable();
+            $table->string("reference_hint")->nullable();
             $table->timestamps();
         });
     }
