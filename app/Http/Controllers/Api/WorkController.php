@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\WorksResource;
+use App\Http\Resources\WorkResource;
 use App\Repositories\WorkRepository;
 use App\Services\Work\WorkService;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class WorkController extends Controller
     {
         $works = $this->workRepository->all();
 
-        return WorksResource::collection($works);
+        return WorkResource::collection($works);
     }
 
     public function show(string $id)
@@ -44,6 +44,6 @@ class WorkController extends Controller
             ], 404);
         }
 
-        return WorksResource::make($work);
+        return WorkResource::make($work);
     }
 }

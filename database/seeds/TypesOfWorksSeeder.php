@@ -223,8 +223,8 @@ class TypesOfWorksSeeder extends Seeder
         foreach ($works as $key => $type) {
             DB::table('works')->insert([
                 'id' =>  $key,
-                'part' => $type['part'],
-                "type" => $type['type'],
+                'type' => $type['part'],
+                "name" => $type['type'],
                 "title_hint" => $type['title'],
                 "reference_hint" => $type['reference'],
             ]);

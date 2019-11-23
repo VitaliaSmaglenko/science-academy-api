@@ -10,8 +10,8 @@ class CreateWorksTable extends Migration
     {
         Schema::create('works', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("type");
-            $table->enum("part", ["Підготовка", "Керівництво", "Інше"]);
+            $table->string("name");
+            $table->enum("type", ["Підготовка", "Керівництво", "Інше"]);
             $table->string("title_hint")->nullable();
             $table->string("reference_hint")->nullable();
             $table->timestamps();
