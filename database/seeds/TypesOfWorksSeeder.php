@@ -7,7 +7,7 @@ class TypesOfWorksSeeder extends Seeder
 {
     public function run(): void
     {
-        $typesOfWorks = [
+        $works = [
             "1" => [
                 "type" => "Проведення планових наукових досліджень (виконання НДР другої половини дня)",
                 "part" => "Інше",
@@ -220,15 +220,13 @@ class TypesOfWorksSeeder extends Seeder
             ],
         ];
 
-        DB::table('types_of_works')->delete();
-
-        foreach ($typesOfWorks as $key => $type) {
-            DB::table('types_of_works')->insert([
+        foreach ($works as $key => $type) {
+            DB::table('works')->insert([
                 'id' =>  $key,
                 'part' => $type['part'],
                 "type" => $type['type'],
-                "title" => $type['title'],
-                "reference" => $type['reference'],
+                "title_hint" => $type['title'],
+                "reference_hint" => $type['reference'],
             ]);
 
         }

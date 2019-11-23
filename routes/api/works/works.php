@@ -1,11 +1,11 @@
 <?php
 
-Route::get('type-of-works', [
-    'as' => 'get.type-of-works.index',
-    'uses' => 'Api\TypeOfWorkController@index'
+Route::get('works', [
+    'as' => 'get.works.index',
+    'uses' => 'Api\WorkController@index'
 ])->middleware("auth:api");
 
-Route::get('type-of-works/{id}', [
-    'as' => 'get.type-of-works.show',
-    'uses' => 'Api\TypeOfWorkController@show'
+Route::get('works/{id}', [
+    'as' => 'get.works.show',
+    'uses' => 'Api\WorkController@show'
 ])->middleware("auth:api");

@@ -2,7 +2,7 @@
 
 namespace App\Services\Work;
 
-class TypeOfWorkService
+class WorkService
 {
 
 }

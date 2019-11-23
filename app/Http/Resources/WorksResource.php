@@ -4,15 +4,15 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TypeOfWorkResource extends JsonResource
+class WorksResource extends JsonResource
 {
     public function toArray($request): array
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => $this->title_hint,
             'part' => $this->part,
-            'reference' => $this->reference,
+            'reference' => $this->reference_hint,
             'type' => $this->type,
         ];
     }
