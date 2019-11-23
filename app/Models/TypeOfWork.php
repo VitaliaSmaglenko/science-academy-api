@@ -9,4 +9,6 @@ class TypeOfWork extends Model
     protected $fillable = [
         'id', 'type', 'part', 'title', 'reference',
     ];
+
+    protected $table = 'types_of_works';
 }
