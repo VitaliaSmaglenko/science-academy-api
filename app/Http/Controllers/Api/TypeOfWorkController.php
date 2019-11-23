@@ -1,85 +1,49 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Http\Controllers\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\TypeOfWorkResource;
+use App\Repositories\TypeOfWorkRepository;
+use App\Services\Work\TypeOfWorkService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Lang;
 
 class TypeOfWorkController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var TypeOfWorkRepository
      */
-    public function index()
-    {
-        //
-    }
+    private $typeOfWorkRepository;
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var TypeOfWorkService
      */
-    public function create()
+    private $typeOfWorkService;
+
+    public function __construct(TypeOfWorkRepository $typeOfWorkRepository, TypeOfWorkService $typeOfWorkService)
     {
-        //
+        $this->typeOfWorkRepository = $typeOfWorkRepository;
+        $this->typeOfWorkService = $typeOfWorkService;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function index(): AnonymousResourceCollection
     {
-        //
+        $typesOfWork = $this->typeOfWorkRepository->get();
+
+        return TypeOfWorkResource::collection($typesOfWork);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(string $id)
     {
-        //
-    }
+        $typeOfWork = $this->typeOfWorkRepository->getById((int) $id);
+        if(!$typeOfWork) {
+            return response()->json([
+                'message' => Lang::get("message.typeOfWork.notFound")
+            ], 404);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return TypeOfWorkResource::make($typeOfWork);
     }
 }
