@@ -30,6 +30,8 @@ return [
 
     "completedWork" => [
         "create" => "Роботу збережено",
-        "coAuthorNotFound" => "Соавтора не знайдено"
+        "coAuthorNotFound" => "Соавтора не знайдено",
+        "notFound" => "Роботу не знайдено",
+        "delete" => "Робота успішно видалена"
     ],
 ];
