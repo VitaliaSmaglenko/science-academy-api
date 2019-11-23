@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
 
 class RequestToCompletedWorkTransformer
 {
-    public function transform(Request $request, int $userId): CompletedWorkDto
+    public function transform(Request $request, int $userId = null): CompletedWorkDto
     {
         $completedWorkDto = new CompletedWorkDto();
 
         !$request->reference ?: $completedWorkDto->setReference($request->reference);
         !$request->co_author_id ?: $completedWorkDto->setCoAuthorId((int)$request->co_author_id);
+        !$userId ?: $completedWorkDto->setUserId($userId);
 
         return $completedWorkDto
-            ->setUserId($userId)
             ->setNumberOfHours((float)$request->number_of_hours)
             ->setSeason($request->season)
             ->setTitle($request->title)
