@@ -24,6 +24,19 @@ class IndicatorService
 
     public function delete(Indicator $indicator): bool
     {
-        return $indicator->save();
+        return $indicator->delete();
+    }
+
+    public function update(IndicatorDto $indicatorDto, Indicator $indicator): Indicator
+    {
+        $indicator->user_id = $indicatorDto->getUserId();
+        $indicator->work_id = $indicatorDto->getWorkId();
+        $indicator->quantity = $indicatorDto->getQuantity();
+        $indicator->number_of_hours = $indicatorDto->getNumberOfHours();
+        $indicator->season = $indicatorDto->getSeason();
+
+        $indicator->save();
+
+        return $indicator;
     }
 }
