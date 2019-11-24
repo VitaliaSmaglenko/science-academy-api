@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\CreateIndicatorRequest;
+use App\Http\Requests\UpdateIndicatorRequest;
+use App\Http\Resources\IndicatorResource;
 use App\Repositories\IndicatorRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\WorkRepository;
@@ -11,6 +13,7 @@ use App\Services\Transformers\RequestToIndicatorTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SuccessfullyResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Lang;
 
 class IndicatorController extends Controller
@@ -55,16 +58,6 @@ class IndicatorController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     public function create(CreateIndicatorRequest $request)
     {
         $work = $this->workRepository->getById((int)$request->work_id);
@@ -87,59 +80,87 @@ class IndicatorController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function getForUser(Request $request): AnonymousResourceCollection
     {
-        //
+        $indicators = $this->indicatorRepository->getByUserId($request->user()->id);
+
+        return IndicatorResource::collection($indicators);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function getByUser(string $userId)
     {
-        //
+        $user = $this->userRepository->getOne((int)$userId);
+        if (!$user) {
+            return response()->json([
+                'message' => Lang::get("message.user.notFound")
+            ], 404);
+        }
+        $indicators = $this->indicatorRepository->getByUserId((int) $userId);
+
+        return IndicatorResource::collection($indicators);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function getForDepartment(string $departmentId)
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function show(string $id)
     {
-        //
+        $indicator = $this->indicatorRepository->getById((int) $id);
+
+        if (!$indicator) {
+            return response()->json([
+                'message' => Lang::get("message.indicator.notFound")
+            ], 404);
+        }
+
+        return IndicatorResource::make($indicator);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function update(UpdateIndicatorRequest $request, $id)
     {
-        //
+        $indicator = $this->indicatorRepository->getById((int) $id);
+
+        if (!$indicator) {
+            return response()->json([
+                'message' => Lang::get("message.indicator.notFound")
+            ], 404);
+        }
+
+        $work = $this->workRepository->getById((int)$request->work_id);
+        if (!$work) {
+            return response()->json([
+                'message' => Lang::get("message.work.notFound")
+            ], 404);
+        }
+
+        $user = $this->userRepository->getOne((int)$request->user_id);
+        if (!$user) {
+            return response()->json([
+                'message' => Lang::get("message.user.notFound")
+            ], 404);
+        }
+
+        $indicatorDto = $this->requestToIndicatorTransformer->transform($request);
+        $indicator = $this->indicatorService->update($indicatorDto, $indicator);
+
+        return IndicatorResource::make($indicator);
+    }
+
+    public function destroy(string $id)
+    {
+        $indicator = $this->indicatorRepository->getById((int) $id);
+
+        if (!$indicator) {
+            return response()->json([
+                'message' => Lang::get("message.indicator.notFound")
+            ], 404);
+        }
+        $this->indicatorService->delete($indicator);
+
+        return SuccessfullyResource::make([
+            'message' => Lang::get("message.indicator.delete")
+        ]);
     }
 }
