@@ -11,6 +11,7 @@ class UserDepartmentResource extends JsonResource
         return [
             'name' => $this->department,
             'position' => $this->pivot->position,
+            'id' => $this->id,
         ];
     }
 }
