@@ -13,8 +13,8 @@ class IndicatorResource extends JsonResource
             'quantity' => $this->quantity,
             'season' => $this->season,
             'number_of_hours' => $this->number_of_hours,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => date((string)$this->created_at),
+            'updated_at' => date((string)$this->updated_at),
             'work' => WorkResource::make($this->works),
             'user' => UserResource::make($this->users),
         ];
