@@ -9,6 +9,7 @@ class UserDepartmentResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->department,
             'position' => $this->pivot->position,
         ];

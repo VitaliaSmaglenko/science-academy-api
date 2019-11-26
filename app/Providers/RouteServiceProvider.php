@@ -50,6 +50,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiWorksRoutes();
 
         $this->mapApiCompletedWorksRoutes();
+
+        $this->mapApiIndicatorsRoutes();
         //
     }
 
@@ -128,5 +130,13 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api/works/completed_works.php'));
+    }
+
+    protected function mapApiIndicatorsRoutes(): void
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api/indicators/indicators.php'));
     }
 }
