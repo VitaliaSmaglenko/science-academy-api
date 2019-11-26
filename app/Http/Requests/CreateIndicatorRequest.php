@@ -29,7 +29,7 @@ class CreateIndicatorRequest extends FormRequest
             'user_id.required' => 'Викладач не вибраний',
             'number_of_hours.required' => 'Кількість часів не обрано',
             'season.required' => 'Поле сезону порожнє',
-            'quantity.required' => 'Кількість часу не встановлена',
+            'quantity.required' => 'Кількість робіт не встановлена',
             'string' => 'Невалідна строка',
         ];
     }
